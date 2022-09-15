@@ -31,6 +31,7 @@ class Post(Base):
     user_id = Column(Integer, ForeignKey('user.id')) 
     comment = relationship(Comment)
     media = relationship(Media)
+    created = Column(String(10))
 
 class Follower(Base):
     __tablename__ = 'follower'
@@ -39,19 +40,21 @@ class Follower(Base):
     user_from_id = Column(Integer, ForeignKey('user.id'))
     user_to_id =  Column(Integer, ForeignKey('user.id'))
 
+class Reaction(Base):
+    __tablename__ = 'reaction'
+
+    id = Column(Integer, primary_key=True)
+    post_from_id = Column(Integer, ForeignKey('post.id'))
+    post_like =  Column(String(1))
+
 class User(Base):
     __tablename__ = 'user'
   
     id = Column(Integer, primary_key=True)
-    username = Column(String(250), nullable=False)
-    firtsname = Column(String(250), nullable=False)
-    lastname = Column(String(250), nullable=False)
+    name = Column(String(250), nullable=False)
+    adress1 = Column(String(250), nullable=False)
     email = Column(String(250), nullable=False)
-    password = Column(String(250), nullable=False)
-    post = relationship(Post)
-    comment = relationship(Comment)
-    media = relationship(Media)
-    follower = relationship(Follower)
+    password = Column(String(10), nullable=False)
 
     def to_dict(self):
         return {}
